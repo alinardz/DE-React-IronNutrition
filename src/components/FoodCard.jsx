@@ -8,7 +8,7 @@ export const FoodCard = (props)=>{
                 <Card.Content>
                 <Image floated='left' size='small' src={props.food.image}/>
                 <Card.Header>{props.food.name}</Card.Header>
-                <Card.Meta>cantidad</Card.Meta>
+                <Card.Meta>{props.food.calories}</Card.Meta>
                 </Card.Content>
             </Card>
         </div>
