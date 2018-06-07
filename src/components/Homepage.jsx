@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {SearchBar} from './SearchBar';
 import {FoodList} from './FoodList';
+import {FoodForm} from './FoodForm';
+import {Form, Button} from 'semantic-ui-react';
 
 const comidas =[
     {
@@ -104,22 +106,61 @@ const comidas =[
 class Homepage extends Component{
     state = {
         foods: comidas,
-        showFoods: comidas
+        showFoods: comidas,
+        newFood:{
+            name: String,
+            image: String,
+            calories: Number
+        },
+        show: false
       }
 
       onChange = (e) =>{
-          const value = e.target.value;
+          const value = e.target.value.toLowerCase();
           const newList = this.state.foods.filter(food=>food.name.toLowerCase().includes(value));
           console.log (newList)
           this.setState({showFoods:newList})
       }
 
+      handleShow = ()=>{
+        this.setState({show: true});
+        console.log("enséñamesta", this.state.show)
+      }
+
+      handleHide = ()=>{
+        this.setState({show: false});  
+        console.log("ya pues, bye", this.state.show)
+      }
+
+      addFood = (e) =>{
+        const value = e.target.value;
+        const field = e.target.name;
+        const newFood = this.state.newFood;
+        newFood[field] = value;
+        this.setState({newFood})
+        console.log(this.newFood)
+      }
+
+      pushFood = () =>{
+          this.state.foods.unshift(this.state.newFood);
+          const foods=this.state.foods;
+          this.setState({foods});
+      }
+
+      createFood = () =>{
+          this.addFood;
+          this.pushFood();
+          this.handleHide();
+      }
+
     render(){
         return(
             <div>
-                <SearchBar
-                    onChange={this.onChange}
-                />
+                <button onClick={this.handleShow}>Agrega</button>
+                <FoodForm show={this.state.show} create={this.createFood} add={this.addFood}/>
+
+                <SearchBar onChange={this.onChange}/>
+
                 <FoodList foods={this.state.showFoods}/>
             </div>
         )
