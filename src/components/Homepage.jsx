@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {SearchBar} from './SearchBar';
 import {FoodList} from './FoodList';
+import {FoodsToday} from './FoodsToday';
 import {FoodForm} from './FoodForm';
 import {Form, Button} from 'semantic-ui-react';
 
@@ -112,7 +113,8 @@ class Homepage extends Component{
             image: String,
             calories: Number
         },
-        show: false
+        show: false,
+        todayFoods:[]
       }
 
       onChange = (e) =>{
@@ -124,7 +126,7 @@ class Homepage extends Component{
 
       handleShow = ()=>{
         this.setState({show: true});
-        console.log("enséñamesta", this.state.show)
+        console.log("enseñamesta", this.state.show)
       }
 
       handleHide = ()=>{
@@ -155,13 +157,16 @@ class Homepage extends Component{
 
     render(){
         return(
-            <div>
-                <button onClick={this.handleShow}>Agrega</button>
-                <FoodForm show={this.state.show} create={this.createFood} add={this.addFood}/>
-
-                <SearchBar onChange={this.onChange}/>
-
-                <FoodList foods={this.state.showFoods}/>
+            <div style={{display:'flex', flexWrap:'wrap'}}>
+                <div style={{width:"50%"}}>
+                    <button onClick={this.handleShow}>Agrega</button>
+                    <FoodForm show={this.state.show} create={this.createFood} add={this.addFood}/>
+                    <SearchBar onChange={this.onChange}/>
+                    <FoodList foods={this.state.showFoods}/>
+                </div>
+                <div style={{width:"50%"}}>
+                    <FoodsToday foods={this.state.showFoods}/>
+                </div>
             </div>
         )
     }
